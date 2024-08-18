@@ -42,7 +42,7 @@ class DB():
         """Filter users."""
         session = self._session
         try:
-            user = session.query(User).filter_by(**kwargs).one()
+            user = session.query(User).filter_by(**kwargs).first()
             return user
         except InvalidRequestError:
             print("Invalid")
