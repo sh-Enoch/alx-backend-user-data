@@ -7,8 +7,6 @@ app = Flask(__name__)
 
 
 @app.route("/")
-
-
 def home():
     """Create route to app."""
     form = {"message": "Bienvenue"}
