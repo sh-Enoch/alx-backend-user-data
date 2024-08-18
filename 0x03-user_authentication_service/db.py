@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Implement add_user method."""
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, update
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy .exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base
 from user import User
@@ -35,3 +37,27 @@ class DB():
         session.add(user)
         session.commit()
         return user
+
+    def find_user_by(self, **kwargs):
+        """Filter users."""
+        session = self._session
+        try:
+            user = session.query(User).filter_by(**kwargs).one()
+            return user
+        except InvalidRequestError:
+            print("Invalid")
+        except NoResultFound:
+            print("Not found")
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update user."""
+        if user_id:
+            session = self._session
+            try:
+                user = self.find_user_by(id=user_id)
+                stmt = update(User).where(User.id == user_id).values(**kwargs)
+                session.execute(stmt)
+                session.commit
+                return user
+            except ValueError:
+                print("Error")
