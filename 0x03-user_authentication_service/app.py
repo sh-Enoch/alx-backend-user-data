@@ -6,12 +6,13 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
-app.route("/", methods=['GET'])
+app.route("/")
 
 
-def index():
+def home():
     """Create route to app."""
-    return jsonify(message="Bienvenue")
+    form = {"message": "Bienvenue"}
+    return jsonify(form)
 
 
 if __name__ == "__main__":
